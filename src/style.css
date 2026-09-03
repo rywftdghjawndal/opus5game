@@ -1,0 +1,98 @@
+:root{
+  --paper:#EAE4D5;
+  --ink:#16130E;
+  --ink-2:#57503F;
+  --ink-3:#968D76;
+  --red:#AE3620;
+  --slate:#3E5560;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html,body{height:100%;overflow:hidden}
+
+body{
+  background:#CFC7B3;
+  color:var(--ink);
+  display:grid;
+  place-items:center;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+}
+
+#stage{
+  position:relative;
+  width:1600px;height:900px;
+  transform-origin:50% 50%;
+  overflow:hidden;
+  background:var(--paper);
+  box-shadow:0 18px 60px rgba(40,30,14,.20);
+}
+
+#cv{position:absolute;inset:0;width:1600px;height:900px;display:block;z-index:1}
+#type{position:absolute;inset:0;pointer-events:none;z-index:2}
+
+/* ---- type ---- */
+/* each glyph sits in its own overflow-hidden box so a rise reads as a reveal
+   from behind the line rather than a fade */
+.line{position:absolute;white-space:pre}
+.line .m{display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.36}
+.line .c{display:inline-block}
+/* promotion is scoped to the line currently moving: 880-odd permanently
+   promoted glyph layers cost more to composite than the animation saves */
+.line.mv .c{will-change:transform,opacity}
+
+.fr{
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:'opsz' 144,'wght' 400,'SOFT' 0,'WONK' 1;
+  font-weight:400;
+  letter-spacing:-.014em;
+  color:var(--ink);
+}
+.mono{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-weight:500;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+}
+
+.slug  {font-size:12.5px;color:var(--ink-3)}
+/* the slugs sit over the plate; a soft knock-out keeps them legible without
+   drawing a box on the page */
+.slug .m{
+  background:rgba(234,228,213,.86);
+  box-shadow:0 0 7px 5px rgba(234,228,213,.86);
+}
+.big   {font-size:158px;font-variation-settings:'opsz' 144,'wght' 250,'SOFT' 0,'WONK' 1;letter-spacing:-.035em}
+.h1    {font-size:58px; font-variation-settings:'opsz' 144,'wght' 380,'SOFT' 0,'WONK' 1}
+.h2    {font-size:44px; font-variation-settings:'opsz' 144,'wght' 370,'SOFT' 0,'WONK' 1}
+.h3    {font-size:31px; font-variation-settings:'opsz' 120,'wght' 400,'SOFT' 0,'WONK' 1}
+.quote {font-size:44px; font-style:italic;font-variation-settings:'opsz' 144,'wght' 390,'SOFT' 14,'WONK' 1}
+.lbl   {font-size:12px;letter-spacing:.2em}
+.lblr  {font-size:12px;letter-spacing:.2em;color:var(--red)}
+.cap   {font-size:11px;letter-spacing:.16em;color:var(--ink-3)}
+.red   {color:var(--red)}
+.dim   {color:var(--ink-2)}
+
+/* ---- replay ---- */
+#replay{
+  position:fixed;
+  left:50%;bottom:16px;
+  transform:translateX(-50%);
+  display:flex;align-items:center;gap:8px;
+  padding:8px 15px 8px 12px;
+  border:1px solid rgba(22,19,14,.26);
+  border-radius:2px;
+  background:transparent;
+  color:var(--ink-2);
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:10.5px;font-weight:500;
+  letter-spacing:.19em;text-transform:uppercase;
+  cursor:pointer;
+  opacity:0;pointer-events:none;
+  transition:opacity .55s ease,color .25s ease,border-color .25s ease;
+}
+#replay.on{opacity:.68;pointer-events:auto}
+#replay:hover{color:var(--red);border-color:rgba(174,54,32,.5);opacity:1}
+#replay svg{width:14px;height:14px;display:block}
